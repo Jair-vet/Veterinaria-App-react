@@ -1,5 +1,26 @@
+import { useForm } from "../hooks/useForm"
+
+const formData = {
+    mascota:        '',
+    propietario:    '',
+    email:          '',
+    alta:           '',
+    sintomas:       '',
+
+  }
 
 export const Formulario = () => {
+
+    const { mascota, propietario, email, alta, sintomas, onInputChange } = useForm( formData )
+
+    const onSubmit = ( event ) => {
+        event.preventDefault();
+
+        // Validacion del Formulario
+
+    }
+
+
   return (
     <div className="md:w-1/2 lg:w-2/5 mb-8">
         <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
@@ -9,7 +30,10 @@ export const Formulario = () => {
             <span className="text-emerald-500 font-bold">Administralos</span>
         </p>
 
-        <form className="bg-gray-50 shadow-md rounded-lg py-10 px-5 md:m-0 m-4">
+        <form 
+            onSubmit={ onSubmit }
+            className="bg-gray-50 shadow-md rounded-lg py-10 px-5 md:m-0 m-4"
+        >
             
             {/* Nombre Mascota */}
             <div className="mb-5">
@@ -22,6 +46,9 @@ export const Formulario = () => {
                     placeholder="Nombre de la Mascota"
                     className="border w-full rounded-md p-2 mt-2 focus:outline-none focus:ring
                          focus:ring-emerald-500 hover:"
+                    name="mascota"
+                    value={ mascota }
+                    onChange={ onInputChange }
                 />
             </div>
             
@@ -31,11 +58,14 @@ export const Formulario = () => {
                     Nombre Propietario
                 </label>
                 <input 
-                    id="mascota"
+                    id="propietario"
                     type="text"
                     placeholder="Nombre del Propetario"
                     className="border w-full rounded-md p-2 mt-2 focus:outline-none focus:ring
                          focus:ring-emerald-500 "
+                    name="propietario"
+                    value={ propietario }
+                    onChange={ onInputChange }
                 />
             </div>
             
@@ -50,6 +80,9 @@ export const Formulario = () => {
                     placeholder="Email para Contactar"
                     className="border w-full rounded-md p-2 mt-2 focus:outline-none focus:ring
                          focus:ring-emerald-500 "
+                    name="email"
+                    value={ email }
+                    onChange={ onInputChange }
                 />
             </div>
             
@@ -63,6 +96,9 @@ export const Formulario = () => {
                     type="date"
                     className="border w-full rounded-md p-2 mt-2 focus:outline-none focus:ring
                          focus:ring-emerald-500 "
+                    name="alta"
+                    value={ alta }
+                    onChange={ onInputChange }
                 />
             </div>
             
@@ -76,6 +112,9 @@ export const Formulario = () => {
                     placeholder="Describe los Sintomas"
                     className="border w-full rounded-md p-2 mt-2 focus:outline-none focus:ring
                          focus:ring-emerald-500 "
+                    name="sintomas"
+                    value={ sintomas }
+                    onChange={ onInputChange }
                 />
             </div>
 
