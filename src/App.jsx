@@ -1,12 +1,18 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Formulario } from "./components/Formulario"
 import { Header } from "./components/Header"
 import { ListadoPacientes } from "./components/ListadoPacientes"
 
 export const App = () => {
 
-  const [pacientes, setPacientes] = useState([]);
-  const [paciente, setPaciente] = useState({})
+  const [pacientes, setPacientes] = useState(() => JSON.parse(localStorage.getItem('pacientes')) || []);
+  const [paciente, setPaciente] = useState({});
+ 
+  // Obtiene los pacientes en el localStorage
+  useEffect(() => {
+    localStorage.setItem("pacientes", JSON.stringify(pacientes));
+  }, [pacientes]);
+ 
 
   const eliminarPaciente = id => {
     const pacientesActualizados = pacientes.filter( paciente => paciente.id !== id ); // Los que sean diferentes
