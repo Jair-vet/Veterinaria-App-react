@@ -4,28 +4,47 @@ export const Paciente = ({ paciente }) => {
     const { mascota, propietario, email, alta, sintomas } = paciente
 
   return (
-    <div className="m-4 md:ml-10 bg-gray-50 shadow-md px-5 py-4 rounded-xl hover:scale-105 
-                        duration-500 hover:bg-emerald-600 group">
-        <p className="font-bold mb-3 uppercase group-hover:text-white">
+    <div className="mr-8 ml-8 mb-3 md:ml-10 bg-gray-50 shadow-md px-5 py-4 rounded-xl hover:scale-105 
+                        duration-500 group hover:bg-emerald-100">
+        
+        {/* Boton Eliminar */}
+        <div className="absolute right-[-6px] top-[-12px]">
+            <button 
+                type="button"
+                className="group-hover:bg-red-600 rounded-full px-[15px] py-[7px] text-gray-200"
+            >X</button>
+        </div>
+
+        <p className="font-bold mb-3 uppercase">
             Nombre: {''}
             <span className="font-normal normal-case">{ mascota }</span>
         </p>
-        <p className="font-bold mb-3 group uppercase group-hover:text-white">
+        <p className="font-bold mb-3 group uppercase">
             Propietario: {''}
             <span className="font-normal normal-case">{ propietario }</span>
         </p>
-        <p className="font-bold mb-3 uppercase group-hover:text-white">
+        <p className="font-bold mb-3 uppercase">
             Email: {''}
             <span className="font-normal normal-case">{ email }</span>
         </p>
-        <p className="font-bold mb-3 uppercase group-hover:text-white">
+        <p className="font-bold mb-3 uppercase">
             Día de Ingreso: {''}
             <span className="font-normal normal-case">{ alta }</span>
         </p>
-        <p className="font-bold mb-3uppercase group-hover:text-white">
+        <p className="font-bold mb-3uppercase ">
             Sintomas: {''}
             <span className="font-normal normal-case">{ sintomas }</span>
         </p>
+
+        {/* Boton Editar */}
+        <div>
+            <button 
+                type="button"
+                className="py-1 w-1/2 bg-emerald-500 hover:bg-emerald-700 text-white rounded-md 
+                    mt-2 uppercase font-bold transition-colors"
+            >Editar</button>
+        </div>
+
     </div>
   )
 }
