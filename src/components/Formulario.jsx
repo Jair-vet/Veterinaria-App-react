@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "../hooks/useForm"
 
 const formData = {
@@ -11,13 +12,23 @@ const formData = {
 
 export const Formulario = () => {
 
-    const { mascota, propietario, email, alta, sintomas, onInputChange } = useForm( formData )
+    const { mascota, propietario, email, alta, sintomas, onInputChange } = useForm( formData );
+    const [error, setError] = useState(false)
 
     const onSubmit = ( event ) => {
         event.preventDefault();
 
         // Validacion del Formulario
+        if([mascota, propietario, email, alta, sintomas, onInputChange].includes('') ){
+            console.log('Hay Al menos un campo vacio');
 
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, "4000")
+            return
+        }
+        // setError(false)
     }
 
 
@@ -34,7 +45,11 @@ export const Formulario = () => {
             onSubmit={ onSubmit }
             className="bg-gray-50 shadow-md rounded-lg py-10 px-5 md:m-0 m-4"
         >
-            
+            { error && 
+                <div className="bg-red-200 text-red-800 text-center p-2 mb-2 rounded-md">
+                    <p className="uppercase">Todos los Campos son Obligatorios</p>
+                </div>
+            }
             {/* Nombre Mascota */}
             <div className="mb-5">
                 <label htmlFor="mascota" className="block text-gray-700 uppercase font-bold">
