@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "../hooks/useForm"
+import { Error } from "./Error";
 
 const formData = {
     mascota:        '',
@@ -56,11 +57,7 @@ export const Formulario = ({ setPacientes, pacientes }) => {
             onSubmit={ onSubmit }
             className="bg-gray-50 shadow-md rounded-lg py-10 px-5 md:m-0 m-4"
         >
-            { error && 
-                <div className="bg-red-200 text-red-800 text-center p-2 mb-2 rounded-md">
-                    <p className="uppercase">Todos los Campos son Obligatorios</p>
-                </div>
-            }
+            { error && <Error mensaje='Todos los Campos son Obligatorios' /> }
             {/* Nombre Mascota */}
             <div className="mb-5">
                 <label htmlFor="mascota" className="block text-gray-700 uppercase font-bold">
