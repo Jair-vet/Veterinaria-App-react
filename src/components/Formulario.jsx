@@ -16,6 +16,13 @@ export const Formulario = ({ setPacientes, pacientes }) => {
     const { mascota, propietario, email, alta, sintomas, onInputChange, onResetForm } = useForm(formData);
     const [error, setError] = useState(false)
 
+    const generarId = () => {
+        const random = Math.random().toString(36).substr(2)
+        const fecha = Date.now().toString(36)
+
+        return random + fecha
+    }
+
     const onSubmit = ( event ) => {
         event.preventDefault();
 
@@ -38,6 +45,7 @@ export const Formulario = ({ setPacientes, pacientes }) => {
             email, 
             alta, 
             sintomas,
+            id: generarId()
         }
         setPacientes([...pacientes, objetoPaciente])  // Le pasamos el objeto creado creando una copia y el nuevo arreglo
         onResetForm() // Resetear el Form

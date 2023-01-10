@@ -13,7 +13,7 @@ export const ListadoPacientes = ({ pacientes }) => {
         {
           pacientes.map( paciente => (
               <Paciente 
-              key={index}
+              key={paciente.id}
               paciente={paciente}
               />        
           ))
