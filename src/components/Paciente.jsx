@@ -1,9 +1,16 @@
 
-export const Paciente = ({ paciente, setPaciente }) => {
+export const Paciente = ({ paciente, setPaciente, eliminarPaciente }) => {
 
-    const { mascota, propietario, email, alta, sintomas } = paciente
+    const { mascota, propietario, email, alta, sintomas, id } = paciente
+
+    const handleEliminar = () => {
+        const resp = confirm('Seguro que deseas Eliminar Este Paciente')
+
+        if( resp){
+            eliminarPaciente(id)
+        }
+    }
     
-
   return (
     <div className="mr-8 ml-8 mb-3 md:ml-10 bg-gray-50 shadow-md px-5 py-4 rounded-xl hover:scale-105 
                         duration-500 group hover:bg-emerald-100">
@@ -13,6 +20,7 @@ export const Paciente = ({ paciente, setPaciente }) => {
             <button 
                 type="button"
                 className="group-hover:bg-red-600 rounded-full px-[15px] py-[7px] text-gray-200"
+                onClick={ handleEliminar }
             >X</button>
         </div>
 
