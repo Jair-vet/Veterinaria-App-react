@@ -1,34 +1,40 @@
-import { useState } from "react";
-import { useForm } from "../hooks/useForm"
+import { useEffect, useState } from "react";
 import { Error } from "./Error";
 
-const formData = {
-    mascota:        '',
-    propietario:    '',
-    email:          '',
-    alta:           '',
-    sintomas:       '',
 
-  }
+export const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 
-export const Formulario = ({ setPacientes, pacientes }) => {
+    const [mascota, setMascota] = useState('');
+    const [propietario, setPropietario] = useState('');
+    const [email, setEmail] = useState('');
+    const [alta, setAlta] = useState('');
+    const [sintomas, setSintomas] = useState('');
 
-    const { mascota, propietario, email, alta, sintomas, onInputChange, onResetForm } = useForm(formData);
     const [error, setError] = useState(false)
 
+    useEffect(() => {
+        if( Object.keys(paciente).length > 0  ) {
+            setMascota(paciente.mascota)
+            setPropietario(paciente.propietario)
+            setEmail(paciente.email)
+            setAlta(paciente.alta)
+            setSintomas(paciente.sintomas)
+        }
+    }, [paciente])
+    
+
     const generarId = () => {
-        const random = Math.random().toString(36).substr(2)
+        const random = Math.random().toString(36)
         const fecha = Date.now().toString(36)
 
         return random + fecha
     }
 
-    const onSubmit = ( event ) => {
-        event.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-        // Validacion del Formulario
-        if([mascota, propietario, email, alta, sintomas, onInputChange].includes('') ){
-            console.log('Hay Al menos un campo vacio');
+         // Validacion del Formulario
+         if([mascota, propietario, email, alta, sintomas].includes('') ){
 
             setError(true)
             setTimeout(() => {
@@ -38,17 +44,39 @@ export const Formulario = ({ setPacientes, pacientes }) => {
         }
         // setError(false)
 
-        // Construir el objeto del Paciente
+
+        // Objeto de Paciente
         const objetoPaciente = {
             mascota, 
-            propietario,
+            propietario, 
             email, 
             alta, 
             sintomas,
-            id: generarId()
         }
-        setPacientes([...pacientes, objetoPaciente])  // Le pasamos el objeto creado creando una copia y el nuevo arreglo
-        onResetForm() // Resetear el Form
+
+        if(paciente.id) {
+            // Editando el Registro
+            objetoPaciente.id = paciente.id
+            const pacientesActualizados = pacientes.map( 
+                pacienteState => pacienteState.id === paciente.id ? objetoPaciente : pacienteState 
+            )
+
+            setPacientes(pacientesActualizados)
+            setPaciente({})
+
+        } else {
+            // Nuevo registro
+            objetoPaciente.id = generarId(); // Creamos el ID
+            setPacientes([...pacientes, objetoPaciente]);
+        }
+
+        // Reiniciar el form
+        setMascota('')
+        setPropietario('')
+        setEmail('')
+        setAlta('')
+        setSintomas('')
+
     }
 
 
@@ -62,7 +90,7 @@ export const Formulario = ({ setPacientes, pacientes }) => {
         </p>
 
         <form 
-            onSubmit={ onSubmit }
+            onSubmit={ handleSubmit }
             className="bg-gray-50 shadow-md rounded-lg py-10 px-5 md:m-0 m-4"
         >
             { error && <Error mensaje='Todos los Campos son Obligatorios' /> }
@@ -79,7 +107,7 @@ export const Formulario = ({ setPacientes, pacientes }) => {
                          focus:ring-emerald-500 hover:"
                     name="mascota"
                     value={ mascota }
-                    onChange={ onInputChange }
+                    onChange={ (e) => setMascota(e.target.value) }
                 />
             </div>
             
@@ -96,7 +124,7 @@ export const Formulario = ({ setPacientes, pacientes }) => {
                          focus:ring-emerald-500 "
                     name="propietario"
                     value={ propietario }
-                    onChange={ onInputChange }
+                    onChange={ (e) => setPropietario(e.target.value) }
                 />
             </div>
             
@@ -113,7 +141,7 @@ export const Formulario = ({ setPacientes, pacientes }) => {
                          focus:ring-emerald-500 "
                     name="email"
                     value={ email }
-                    onChange={ onInputChange }
+                    onChange={ (e) => setEmail(e.target.value) }
                 />
             </div>
             
@@ -129,7 +157,7 @@ export const Formulario = ({ setPacientes, pacientes }) => {
                          focus:ring-emerald-500 "
                     name="alta"
                     value={ alta }
-                    onChange={ onInputChange }
+                    onChange={ (e) => setAlta(e.target.value) }
                 />
             </div>
             
@@ -145,13 +173,13 @@ export const Formulario = ({ setPacientes, pacientes }) => {
                          focus:ring-emerald-500 "
                     name="sintomas"
                     value={ sintomas }
-                    onChange={ onInputChange }
+                    onChange={ (e) => setSintomas(e.target.value) }
                 />
             </div>
 
             <input 
                 type="submit"
-                value="Agregar Paciente"
+                value={ paciente.id ? 'Editar Paciente' : 'Agregar Paciente' }
                 className="bg-emerald-500 w-full rounded-md p-3 text-white uppercase font-bold
                             hover:bg-emerald-700 cursor-pointer transition-colors" 
             />

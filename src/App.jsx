@@ -5,7 +5,8 @@ import { ListadoPacientes } from "./components/ListadoPacientes"
 
 export const App = () => {
 
-  const [pacientes, setPacientes] = useState([])
+  const [pacientes, setPacientes] = useState([]);
+  const [paciente, setPaciente] = useState({})
 
   return (
     <>
@@ -18,9 +19,12 @@ export const App = () => {
           <Formulario 
             setPacientes={ setPacientes }
             pacientes={ pacientes }
+            paciente={ paciente }
+            setPaciente={ setPaciente }
           />
           <ListadoPacientes 
             pacientes={ pacientes }
+            setPaciente={ setPaciente }
           />
         </div>
 

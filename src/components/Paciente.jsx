@@ -1,7 +1,8 @@
 
-export const Paciente = ({ paciente }) => {
+export const Paciente = ({ paciente, setPaciente }) => {
 
     const { mascota, propietario, email, alta, sintomas } = paciente
+    
 
   return (
     <div className="mr-8 ml-8 mb-3 md:ml-10 bg-gray-50 shadow-md px-5 py-4 rounded-xl hover:scale-105 
@@ -42,6 +43,7 @@ export const Paciente = ({ paciente }) => {
                 type="button"
                 className="py-1 w-1/2 bg-emerald-500 hover:bg-emerald-700 text-white rounded-md 
                     mt-2 uppercase font-bold transition-colors"
+                onClick={ () => setPaciente( paciente ) }
             >Editar</button>
         </div>
 
