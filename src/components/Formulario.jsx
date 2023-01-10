@@ -10,9 +10,9 @@ const formData = {
 
   }
 
-export const Formulario = () => {
+export const Formulario = ({ setPacientes, pacientes }) => {
 
-    const { mascota, propietario, email, alta, sintomas, onInputChange } = useForm( formData );
+    const { mascota, propietario, email, alta, sintomas, onInputChange, onResetForm } = useForm(formData);
     const [error, setError] = useState(false)
 
     const onSubmit = ( event ) => {
@@ -29,6 +29,17 @@ export const Formulario = () => {
             return
         }
         // setError(false)
+
+        // Construir el objeto del Paciente
+        const objetoPaciente = {
+            mascota, 
+            propietario,
+            email, 
+            alta, 
+            sintomas,
+        }
+        setPacientes([...pacientes, objetoPaciente])  // Le pasamos el objeto creado creando una copia y el nuevo arreglo
+        onResetForm() // Resetear el Form
     }
 
 
